@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 986cdbfdbaffe4645930ba7631f6e628, type: 3}
+  m_Name: TerrainGenerator
+  m_EditorClassIdentifier: 
+  TerrainParentPrefab: {fileID: 3906274703839300110, guid: e939e5a014225084b80db21aee57fd0d, type: 3}
+  TerrainPrefab: {fileID: 9042651598667733665, guid: bbefd498858a3a3418a2d739919b612c, type: 3}
+  Offset: 1.1
+  SizeX: 10
+  SizeY: 10
