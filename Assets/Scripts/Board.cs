@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
+    public static Board Instance => m_instance;
+    private static Board m_instance;
+
     [SerializeField] private Terrain m_terrain;
     [SerializeField] private List<Unit> m_units;
+
+    private void Awake()
+    {
+        m_instance = this;
+    }
 
     public void RefreshTerrain()
     {
@@ -17,15 +25,15 @@ public class Board : MonoBehaviour
         return m_units.FirstOrDefault(x => x.PosX == _part.PosX && x.PosY == _part.PosY);
     }
 
-    public List<TerrainPart> InitiateMove(Unit _selectedUnit)
+    public void HighlightMove(Unit _selectedUnit)
     {
-        List<TerrainPart> toReturn = GetPartsInRadius(_selectedUnit.PosX, _selectedUnit.PosY, _selectedUnit.MoveRadius);
-        foreach (TerrainPart part in toReturn)
+        List<TerrainPart> toHighlight = GetPartsInRadius(_selectedUnit.PosX, _selectedUnit.PosY, _selectedUnit.MoveRadius);
+        List<TerrainPart> takenSlots = GetTakenSlots(toHighlight);
+        toHighlight.RemoveAll(x => takenSlots.Contains(x));
+        foreach (TerrainPart part in toHighlight)
         {
             part.SetHighlightMove(true);
         }
-
-        return toReturn;
     }
 
     public List<TerrainPart> GetPartsInRadius(int _posX, int _posY, int _radius)
@@ -48,5 +56,21 @@ public class Board : MonoBehaviour
         partsInRadius.Add(current);
 
         return partsInRadius;
+    }
+
+    private List<TerrainPart> GetTakenSlots(List<TerrainPart> _partsToCheck)
+    {
+        return _partsToCheck.FindAll(x => m_units.Exists((y => y.PosX == x.PosX && y.PosY == x.PosY)));
+    }
+
+    public bool IsSlotTaken(TerrainPart _part)
+    {
+        return m_units.Exists(x => _part.PosX == x.PosX && _part.PosY == x.PosY);
+    }
+
+    public bool IsInRadius(int _posX, int _posY, int _radX, int _radY, int _radius)
+    {
+        List<TerrainPart> inRadius = GetPartsInRadius(_radX, _radY, _radius);
+        return inRadius.Exists(x => x.PosX == _posX && x.PosY == _posY);
     }
 }
