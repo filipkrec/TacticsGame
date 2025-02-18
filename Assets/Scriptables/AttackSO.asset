@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d49217923933614aad9e06fae163c76, type: 3}
   m_Name: AttackSO
   m_EditorClassIdentifier: 
-  Range: 0
-  Damage: 0
-  MP: 0
-  Radius: 0
+  Name: Basic
+  Range: 3
+  DamageMin: 15
+  DamageMax: 35
+  MP: 5
+  Radius: 1

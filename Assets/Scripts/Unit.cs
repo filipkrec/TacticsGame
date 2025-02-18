@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -9,6 +10,7 @@ public class Unit : MonoBehaviour
 
     public string Name => m_config.Name;
     public int MoveRadius => m_config.Speed;
+    public List<AttackScriptableObject> Attacks => m_config.Attacks;
 
     private int m_currentHP;
     private int m_currentMP;
@@ -40,6 +42,11 @@ public class Unit : MonoBehaviour
         Board.Instance.HighlightMove(this);
     }
 
+    public void InitiateAttack(AttackScriptableObject _attack)
+    {
+        Board.Instance.HighlightAttackRange(this, _attack);
+    }
+
     public bool TryMove(TerrainPart _target)
     {
         if (!Board.Instance.IsInRadius(_target.PosX, _target.PosY, PosX, PosY, MoveRadius)
@@ -52,11 +59,6 @@ public class Unit : MonoBehaviour
             Move(_target);
             return true;
         }
-    }
-
-    public void InitiateAttack(AttackScriptableObject _attack)
-    {
-
     }
 
     private void Die()

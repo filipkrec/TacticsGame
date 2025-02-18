@@ -29,16 +29,25 @@ public class PlayerController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
+        if (m_targetPart != null) m_targetPart.SetTarget(false);
+
         if (Physics.Raycast(ray, out hit))
         {
-            if (m_targetPart != null) m_targetPart.SetTarget(false);
+            TerrainPart hitPart = hit.transform.GetComponent<TerrainPart>();
+            if (m_targetPart != hitPart)
+            {
+                m_targetPart = hitPart;
 
-            m_targetPart = hit.transform.GetComponent<TerrainPart>();
-
-            m_targetPart.SetTarget(true);
+                m_targetPart.SetTarget(true);
+                m_actionController.HoverTerrain(m_targetPart);
+            }
+        }
+        else
+        {
+            m_targetPart = null;
         }
 
-        if (Input.GetMouseButtonDown(1) && m_targetPart != null)
+        if (Input.GetMouseButtonDown(0) && m_targetPart != null)
         {
             m_actionController.TargetTerrain(m_targetPart);
         }

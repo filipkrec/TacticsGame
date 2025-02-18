@@ -36,6 +36,32 @@ public class Board : MonoBehaviour
         }
     }
 
+    public void HighlightAttackRange(Unit _selectedUnit, AttackScriptableObject _attack)
+    {
+        List<TerrainPart> toHighlight = GetPartsInRadius(_selectedUnit.PosX, _selectedUnit.PosY, _attack.Range);
+        toHighlight.RemoveAll(x => x.PosX == _selectedUnit.PosX && x.PosY == _selectedUnit.PosY);
+
+        foreach (TerrainPart part in toHighlight)
+        {
+            part.SetHighlightAttackRange(true);
+        }
+    }
+
+    public void HighlightAttackArea(int _posX, int _posY, AttackScriptableObject _attack)
+    {
+        foreach (TerrainPart part in m_terrain.m_terrainParts)
+        {
+            part.SetHighlightAttackArea(false);
+        }
+
+        List<TerrainPart> toHighlight = GetPartsInRadius(_posX, _posY, _attack.Radius);
+
+        foreach (TerrainPart part in toHighlight)
+        {
+            part.SetHighlightAttackArea(true);
+        }
+    }
+
     public List<TerrainPart> GetPartsInRadius(int _posX, int _posY, int _radius)
     {
         TerrainPart current = m_terrain.GetPart(_posX, _posY);

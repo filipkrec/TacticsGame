@@ -16,4 +16,5 @@ MonoBehaviour:
   MaxHP: 200
   Speed: 5
   MaxMP: 25
-  Attacks: []
+  Attacks:
+  - {fileID: 11400000, guid: 68805273664fd4d46adfeed517678ace, type: 2}
